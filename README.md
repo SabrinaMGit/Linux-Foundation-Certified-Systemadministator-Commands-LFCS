@@ -210,10 +210,70 @@ $ chmod 660 /home/aaron/Pictures/family_dog.jpg
 
 ## Create and manage soft links
 ```console
+# ln -s path_to_target_file path_to_link_file
+$ ln –s /home/aaron/Pictures/family_dog.jpg family_dog_shortcut.jpg
+$ ls -l
+  lrwxrwxrwx. 1 aaron aaron family_dog_shortcut.jpg -> /home/aaron/Pictures..
+$ readlink family_dog_shortcut.jpg
+  /home/aaron/Pictures/family_dog.jpg
+$ echo “Test” >> fstab_shortcut
+  bash: fstab_shortcut: Permission denied
+$ ls -l
+lrwxrwxrwx. 1 aaron aaron family_dog_shortcut.jpg -> /home/aaron/Pictures..
 ```
 ## List set and change standard file permissions
+
+### Owners and Groups
 ```console
+$ ls -l
+$ chgrp wheel picture.jpg
+$ ls -l 
+-rw-r-----. 1 bob wheel 49 Oct 27 14:41 picture.jpg
+$ groups
+$ sudo chown jane picture.jpg
+$ ls -l 
+-rw-r-----. 1 jane family 49 Oct 27 14:41 picture.jpg
+$ sudo chown bob:family picture.jpg
+$ ls -l
+-rw-r-----. 1 bob family 49 Oct 27 14:41 picture.jpg
 ```
+### File and Directory Permissions
+```console
+$ ls -l
+-rwxrwxrwx. 1 bob family 49 Oct 27 14:41 picture.jpg
+```
+
+| File Type        | Identifier |
+| ---------------- | ----------:|
+| Directory        |      d     |
+| Regular File     |      -     |
+| Character Device |      c     |
+| Link             |      l     |
+| Socket File      |      s     |
+| Pipe             |      p     |
+| Block Device     |      b     |
+
+owner | group | others
+
+### Adding Permissions
+```console
+$ chmod u+w picture.jpg
+$ chmod o-r picture.jpg
+$ chmod g=r picture.jpg
+$ chmod g=rw text.txt
+$ chmod g= text.txt
+$ chmod g-rwx text.txt
+$ chmod u+rw,g=r,o= text.txt
+$ chmod u=rw,g-w text.txt
+$ chmod 755 text.txt
+```
+### Octal Permission
+| Permission | Value |
+| ---------- | ----- |
+|     r      |   4   |
+|     w      |   2   |
+|     x      |   1   |
+
 ## SUID SGID and Sticky Bit
 ```console
 ```
