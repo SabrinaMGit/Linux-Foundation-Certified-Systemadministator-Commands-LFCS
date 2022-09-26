@@ -124,6 +124,7 @@ $ systemctl                             [TAB TAB TAB]
 $ systemctl list -dependecies           [TAB]
 ```
 ## Create Delete Copy and Move Files and Directories
+### Current / Working Directory
 ```console
 $ ls
 $ ls -a
@@ -136,19 +137,77 @@ $ cd ..
 4 cd /
 $ cd -
 $ cd
+```
+### Creating Files 
+```console
 $ touch file.txt
 $ touch /home/bob/file.txt
 $ touch ../bob/file.txt
-mkdir Files
-cp file.txt Files/
-cp -r Files/ BackupFiles/
-mv file.txt Files/
-rm files.txt
-rm -r Files/
+```
+
+### Creating Directories
+```console
+$ mkdir Files
+```
+
+### Moving Files and Directories
+```console
+$ cp file.txt Files/
+$ cp -r Files/ BackupFiles/
+```
+
+### Moving Files
+```console
+$ mv file.txt Files/
+```
+
+### Deleting Files and Directories
+```console
+$ rm files.txt
+$ rm -r Files/
 ```
 ## Create and manage hard links
+### Inodes
 ```console
+$ echo “Picture of Milo the dog” > Pictures/family_dog.jpg
+$ stat Pictures/family_dog.jpg
+File: Pictures/family_dog.jpg
+Size: 49 Blocks: 8 IO Block: 4096 regular file
+Device: fd00h/64768d Inode: 52946177 Links: 1
+Access: (0640/-rw-r-----) Uid: ( 1000/ aaron) Gid: ( 1005/ family)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2021-10-27 16:33:18.949749912 -0500
+Modify: 2021-10-27 14:41:19.207278881 -0500
+Change: 2021-10-27 16:33:18.851749919 -0500
+Birth: 2021-10-26 13:37:17.980969655 -0500
 ```
+### Hard Links
+```console
+$ cp –r /home/aaron/Pictures/ /home/jane/Pictures/
+$ ln /home/aaron/Pictures/family_dog.jpg /home/jane/Pictures/family_dog.jpg
+# ln path_to_target_file path_to_link_file
+
+$ stat Pictures/family_dog.jpg
+File: Pictures/family_dog.jpg
+Size: 49 Blocks: 8 IO Block: 4096 regular file
+Device: fd00h/64768d Inode: 52946177 Links: 2
+Access: (0640/-rw-r-----) Uid: ( 1000/ aaron) Gid: ( 1005/ family)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2021-10-27 16:33:18.949749912 -0500
+Modify: 2021-10-27 14:41:19.207278881 -0500
+Change: 2021-10-27 16:33:18.851749919 -0500
+Birth: 2021-10-26 13:37:17.980969655 -0500
+
+$ rm /home/aaron/Pictures/family_dog.jpg
+$ rm /home/jane/Pictures/family_dog.jpg
+```
+### Limitations and Considerations
+```console
+$ useradd –a –G family aaron
+$ useradd –a –G family jane
+$ chmod 660 /home/aaron/Pictures/family_dog.jpg
+```
+
 ## Create and manage soft links
 ```console
 ```
