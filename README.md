@@ -14,6 +14,8 @@
   * [List, set and change standard file permissions](#list-set-and-change-standard-file-permissions)
   * [SUID, SGID, and Sticky Bit](#suid-sgid-and-sticky-bit)
   * [Search for files](#search-for-files)
+  * [Compare and manipulate content](#compare-and-manipulate-content)
+  * [Search file using Grep](#search-file-using-grep)
   * [Analyze test using basic regualar expressions](#analyze-test-using-basic-regualar-expressions)
   * [Extended Regular Expression](#extended-regular-expression)
   * [Archive, backup, compress, unpack, and uncompress files](#archive-backup-compress-unpack-and-uncompress-files)
@@ -319,6 +321,33 @@ $ find -perm /u=rw,g=rw,o=r         # any of these permissions
 
 $ find \! -perm -o=r
 ```
+## Compare and manipulate content
+```console
+$ cat users.txt
+$ tac users.txt
+$ tail /var/log/dnf.log
+$ tail -n 20 dnf.log
+$ head dnf.log
+```
+```console
+$ sed 's/canda/canada/g' userinfo.txt
+$ sed 's/canda/canada' userinfo.txt
+$ sed -i 's/canda/canada' userinfo.txt
+
+$ cut -d ' ' -f 1 userinfo.txt         # cut first cell 
+$ cut -d ',' -f 3 userinfo.txt         # cut third cell separated with ,
+
+$ uniq countries.txt                   # delete double entries
+
+$ sort countries
+$ sort countries.txt | uniq
+
+$ diff file1 file2                                 # difference
+$ diff -c file1 file2                              # context
+$ diff -y file1 file2     === $ sdiff file1 file2  # side-by-side diff
+```
+
+## Search file using Grep
 ## Analyze test using basic regualar expressions
 ```console
 ```
