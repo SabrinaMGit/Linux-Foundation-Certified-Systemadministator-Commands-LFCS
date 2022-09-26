@@ -3,7 +3,7 @@
 ![](https://training.linuxfoundation.org/wp-content/uploads/2020/11/lfcs_111820-300x300.png)
 
 
-**Table of Contents**
+## Table of Contents
 
 - [Essential commands](#essential-commands)
   * [Log into & remote graphical and text mode consoles](#log-into-remote-graphical-and-text-mode-consoles)
@@ -84,20 +84,101 @@
 
 
 # Essential commands
+
 ## Log into remote graphical and text mode consoles
+```console
+$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group
+default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state
+UP group default qlen 1000
+link/ether 08:00:27:6b:d7:87 brd ff:ff:ff:ff:ff:ff
+inet 192.168.0.17/24 brd 192.168.0.255 scope global dynamic
+noprefixroute enp0s3
+valid_lft 1966sec preferred_lft 1966sec
+inet6 fe80::a00:27ff:fe6b:d787/64 scope link noprefixroute
+```
+```console
+$ ssh user@ip
+Activate the web console with: systemctl enable --now cockpit.socket
+Last login: Tue Oct 19 20:27:15 2021 from 192.168.0.3
+```
 ## Read and use System Documentation
+```console
+$ ls --help
+$ ls -l
+$ journalctl --help
+$ man journalctl
+$ man man
+$ man 1 printf
+$ man 3 printf
+$ apropos directory
+$ sudo mandb
+$ apropos director
+$ systemctl                             [TAB TAB TAB]
+$ systemctl list -dependecies           [TAB]
+```
 ## Create Delete Copy and Move Files and Directories
+```console
+$ ls
+$ ls -a
+$ ls -l /var/log/
+$ ls -al
+$ ls -alh
+$ pwd
+$ cd /var/log/
+$ cd ..
+4 cd /
+$ cd -
+$ cd
+$ touch file.txt
+$ touch /home/bob/file.txt
+$ touch ../bob/file.txt
+mkdir Files
+cp file.txt Files/
+cp -r Files/ BackupFiles/
+mv file.txt Files/
+rm files.txt
+rm -r Files/
+```
 ## Create and manage hard links
+```console
+```
 ## Create and manage soft links
+```console
+```
 ## List set and change standard file permissions
+```console
+```
 ## SUID SGID and Sticky Bit
+```console
+```
 ## Search for files
+```console
+```
 ## Analyze test using basic regualar expressions
+```console
+```
 ## Extended Regular Expression 
+```console
+```
 ## Archive backup compress unpack and uncompress files
+```console
+```
 ## Compress and Uncompress files
+```console
+```
 ## Backup files to a Remote System
+```console
+```
 ## Use input output redirection
+```console
+```
 
 # Operation of running systems
 ## Boot reboot and shutdown a system safely
