@@ -279,6 +279,45 @@ $ chmod 755 text.txt
 ```
 ## Search for files
 ```console
+$ find /usr/share/ -name '*.jpg'
+$ find /lib64/ -size +10M
+$ find /dev/ -mmin -1
+$ find /bin/ -name file1.txt
+$ find -name file1.txt              # No path -> current directory
+$ find -iname bob
+$ find -name "f*"
+```
+### Modified Time
+```console
+$ find -mmin [minute]
+$ find -mmin 5
+$ find -mmin -5
+$ find -mmin +5
+$ find -mtime 2                     # 24-hour periods
+$ find -cmin -5                     # change Minute
+```
+### File Size
+```console
+$ find -size 512k
+$ find -size +512k                  # Greater than 512 kb
+$ find -size -512k                  # Less than 512 kb
+```
+### Search Expressions
+```console
+$ find -name "f*"
+$ find -name "f*" -size 512k        # AND operator
+$ find -name "f*" -o -size 512k     # OR operator
+$ find -not -name "f*"              # NOT operator
+$ find \! -name "*"                 # alternate NOT operator
+
+$ find -perm 664                    # exactly 664 permissions
+$ find -perm -664                   # at least 664 permissions
+$ find -perm /664                   # any of these permissions
+$ find -perm u=rw,g=rw,o=r          # exectly 664 permissions
+$ find -perm -u=rw,g=rw,o=r         # at least 664 permissions
+$ find -perm /u=rw,g=rw,o=r         # any of these permissions
+
+$ find \! -perm -o=r
 ```
 ## Analyze test using basic regualar expressions
 ```console
