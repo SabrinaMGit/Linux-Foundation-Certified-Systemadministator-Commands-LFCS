@@ -683,7 +683,13 @@ $ shutdown -r +15
 $ shutdown  -r +1
 ```
 
-## Use Scripting to Automate Tasks
+## Boot or change system into different operating modes
+missing
+## Install configure and troubleshoot bootloaders
+missing
+
+## Use scripting to automate system maintenance tasks
+### Use Scripting to Automate Tasks
 ```console
 $ touch script.sh
 $ chmod +x script.sh
@@ -741,15 +747,145 @@ if [ $online = 0 ]; then
     exit 0
 fi
 ```
-
-## Boot or change system into different operating modes
-## Install configure and troubleshoot bootloaders
-## Use scripting to automate system maintenance tasks
 ## Manage the startup process and service - In Services Configuration
+### Start Process and Services
+```console
+$ systemctl cat sshd.service
+$ systemctl edit --full sshd.service
+$ systemctl revert sshd.service
+$ systemctl status sshd.service
+$ systemctl stop sshd.service
+$ systemctl status sshd.service
+$ systemctl restart sshd.service
+$ systemctl reload sshd.service
+$ systemctl reload-or-restart sshd.service
+$ systemctl disable sshd.service
+$ systemctl is-enabled sshd.service
+disabled
+$ systemctl enable sshd.service
+$ systemctl enable --now sshd.service
+$ systemctl disable --now sshd.service
+
+$ systemctl mask sshd.service
+$ systemctl status sshd.service
+Failed to enable unit: Unit file /etc/systemd/system/atd.service is masked.
+$ systemctl unmask sshd.service
+
+$ $ systemctl list-units --type service --al
+```
 ## Diagnose and manage processes
+missing
 ## Locate and analyze system log files
+```console
+$ less file.log
+$ tail -F file.log                                      # show all upcomming logs
+```
+
+### Journalctl
+```console
+$ journalctl /bin/sudo
+$ journalctl -u sshd.service
+$ journalctl
+$ journalctl -e
+Nov 16 18:40:01 LFCS-CentOS anacron[3666]: Job `cron.weekly' terminated
+Nov 16 18:40:01 LFCS-CentOS anacron[3666]: Normal exit (2 jobs run)
+lines 994-1016/1016 (END)
+$ journalctl -f
+$ journalctl -p err                                     # just error logs
+$ journalctl -p                                         # TAB TAB will show you: info, warning, err, crit
+$ journalctl -p -g '^b'
+$ journalctl -S 02:00
+$ journalctl -S 01:00 -U 02:00
+$ journalctl -S '2021-11-16 12:04:55'
+$ journalctl -b 0
+$ journalctl -b -1
+```
+### See Who Logged In
+```console
+$ last 
+$ lastlog
+```
 ## Schedule tasks to run a set date and time
+```console
+$ cat /etc/crontab
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=root
+# For details see man 4 crontabs
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# | .------------- hour (0 - 23)
+# | | .---------- day of month (1 - 31)
+# | | | .------- month (1 - 12) OR jan,feb,mar,apr ...
+# | | | | .---- day of week (0 - 6) (Sunday=0 or 7) OR
+sun,mon,tue,wed,thu,fri,sat
+# | | | | |
+# * * * * * user-name command to be executed
+35 6 * * * root /bin/some_command --some_options
+```
+* = match all possible values (i.e., every hour)
+, = match multiple values (i.e., 15,45)
+- = range of values (i.e., 2-4)
+/ = specifies steps (i.e., */4)
+
+### Scheduling Jobs with cron
+daily = /etc/cron.daily/
+hourly = /etc/cron.hourly/
+monthly = /etc/cron.monthly/
+weekly = /etc/cron.weekly/
+
+```console
+$ which touch
+$ crontab -e
+$ crontab -l
+35 6 * * * /usr/bin/touch bob_test
+$ sudo crontab -l
+0 * * * * /usr/bin/touch root_test
+$ sudo crontab -e -u jane
+30 * * * * /usr/bin/touch jane_test
+$ crontab -r
+$ sudo cronta -r -u jane
+```
+
+```console
+$ touch shellscript 
+$ sudo cp shellcript /etc/cron.hourly/
+$ sudo chmod -rx /etc/cron.hourly/shellcript
+$ sudo rm /etc/cron.hourly/shellscript
+```
+### Scheduling Jobs with anacron
+```console
+$ sudo vim /etc/anacrontab
+#period in days delay in minutes job-identifier command
+1 5 cron.daily nice run-parts
+/etc/cron.daily
+7 25 cron.weekly nice run-parts
+/etc/cron.weekly
+@monthly 45 cron.monthly nice run-parts /etc/cron.monthly
+3 10 test job /usr/bin/touch /root/anacron_created_this
+7 10 test job /usr/bin/touch /root/anacron_created_this
+@weekly 10 test job /usr/bin/touch /root/anacron_created_this
+@monthly 10 test job /usr/bin/touch /root/anacron_created_this
+
+$ anacron -T
+```
+### Scheduling Jobs with at
+```console
+$ at 15:00
+$ at 'August 20 2022'
+$ at '2:30 August 20 2022'
+$ at 'now + 30 minutes'
+$ at 'now + 3 hours'
+$ at 'now + 3 days'
+$ at 'now + 3 weeks'
+$ at 'now + 3 months'
+
+$ atq
+$ at -c 20 
+$ atrm 20
+```
 ## Verify completion of scheduled jobs
+missing
 ## Update software to provide required functionality and security
 ## Manage Software
 ## Identify the component of a Linux distribution that a file belongs to 
