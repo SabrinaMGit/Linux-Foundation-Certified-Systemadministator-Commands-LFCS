@@ -890,15 +890,61 @@ missing
 ```console
 $ dnf check-upgrade
 $ sudo dnf upgrade
+````
+
+## Manage Software
+```console
 $ sudo dnf repolist
 repo id repo name
 appstream CentOS Stream 8 - AppStream
 baseos CentOS Stream 8 - BaseOS
 extras CentOS Stream 8 - Extras
-$ sudo dnf repolist -v                          # verbose
 
+$ sudo dnf repolist -v                          # verbose
+$ sudo dnf repolist --all
+$ sudo dnf config-manager -enable powertools
+$ sudo dnf config-manager -disable powertools
+$ sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+$ sudo dnf repolist -v
+Repo-filename : /etc/yum.repos.d/docker-ce.repo
+$ sudo rm /etc/yum.repos.d/docker-ce.repo
+
+$ sudo search web server
+cockpit.x86_64: Web Console for Linux servers
+$ sudo search 'web server'
+nginx.x86_64: A high performance web server and reverse proxy server
+
+$ sudo dnf info nginx
+Description : Nginx is a web server and a reverse proxy server for HTTP, SMTP,
+POP3 and
+: IMAP protocols, with a strong focus on high concurrency,
+performance and low
+: memory usage.
+
+$ sudo dnf install nginx
+$ sudo dnf reinstall nginx
+$ sudo dnf remove nginx
+
+$ sudo dnf group list 
+Available Environment Groups:
+Server
+Minimal Install
+Workstation
+Virtualization Host
+Custom Operating System
+Server with GUI
+$ sudo dnf group install 'Server with GUI'
+$ sudo dnf group install --with-optional 'Server with GUI'
+$ sudo dnf group remove 'Server with GUI'
+
+$ sudo dnf group list --hidden
+
+$ wget https://download.nomachine.com/download/7.7/Linux/nomachine_7.7.4_1_x86_64.rpm
+$ sudo dnf install ./nomachine_7.7.4_1_x86_64.rpm
+$ sudo dnf remove nomachine
 ```
-## Manage Software
+
 ## Identify the component of a Linux distribution that a file belongs to 
 ## Verify the integrity and availability of resources
 ## Change kernel runtime parameters, persistent and non-persistent
