@@ -567,12 +567,104 @@ $ sudo tar --extract --file archive.tar --directory /tmp/
 ```
 ## Compress and Uncompress files
 ```console
+$ gzip file1
+$ gunzip file1.gz
+$ gzip --decompress file1.gz
+
+$ bzip file2
+$ bunzip file2.bz2
+$ bzip2 --decompress file2.bz2
+
+$ xz file3
+$ unxz file3.xz 
+$ xz --decompress file3.xz
+
+$ gzip --keep file1
+$ bzip2 --keep file2
+$ xz --keep file3
+$ gzip --list file1
+compressed uncompressed ratio name
+71 78 39.7% file1
 ```
+
+### Compress And Decompression Utilities
+```console
+$ zip archive file 1
+# This is the same:
+$ zip archive.zip file1
+
+$ zip -r archive.zip Pictures/                  # recursivly
+$ unzip archive.zip
+
+$ tar --create --file archive.tar file1
+$ gzip archive.tar
+$ gzip --keep archive.tar
+
+$ tar --create --gzip --file archive.tar.gz file1
+# This is the same:
+$ tar czf archive.tar.gz file1
+
+$ tar --create --bzip2 --file archive.tar.bz2 file1
+# This is the same:
+$ tar cjf archive.tar.bz2 file1
+
+$ tar --create --xz --file archive.tar.xz file1
+# This is the same:
+$ tar cJf archive.tar.xz file1
+
+$ tar caf archive file1
+$ tar --ectract --file archive.tar.gz
+$ tar xf archive.tar.gz file1
+````
+
 ## Backup files to a Remote System
 ```console
+$ rsync -a Pictures/ bob@9.9.9.9:/home/bib/Pictures/
+$ rsync -a bob@9.9.9.9:/home/bib/Pictures/ Pictures/
+$ rsync -a Pictures/ /Backup/Pictures/
+```
+### Disk Imaging
+```console
+$ sudo dd if=/dev/vda of=diskimage.raw bs=1M status=progress
+1340080128 bytes (1.3GB, 1.2GB) copied, 3s, 432 MB/s
+$ sudo dd if=diskimage.raw of=/dev/vda bs=1M status=progress
+1340080128 bytes (1.3GB, 1.2GB) copied, 3s, 432 MB/s
 ```
 ## Use input output redirection
 ```console
+$ cat file.txt
+$ sort file.txt
+$ sort file.txt > sortedfile.txt
+
+$ date > file.txt                           # standard output stdout 
+# This is the same:
+$ date 1> file.txt
+
+$ script.sh 2> errors.txt                   # standard error stderr
+$ script.sh < input.txt                     # standard input stdin
+
+$ script.sh 1> output.txt 2> errors.txt     # overwrite
+$ script.sh 1>> output.txt 2>> errors.txt   # append
+
+# This is all the same:
+$ script.sh > output.txt 2>&1
+$ script.sh 1> output.txt 2>&1
+$ script.sh 2>&1 output.txt
+
+$ sort <<EOF
+> 6
+> 3
+> 8
+> EOF
+3
+6
+8
+
+$ bc <<<1+2+3+4
+10
+
+# Piping
+$ grep –v '^#' /etc/login.defs | sort | column -t
 ```
 
 # Operation of running systems
