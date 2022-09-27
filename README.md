@@ -2,22 +2,11 @@
 
 ![](https://training.linuxfoundation.org/wp-content/uploads/2020/11/lfcs_111820-300x300.png)
 
-##TODOS
+## TODOS
 
 - [] Write down content of powerpoint
 - [] Write down lab questions and answers
 
-###GFM task list
-
-- [x] GFM task list 1
-- [x] GFM task list 2
-- [ ] GFM task list 3
-    - [ ] GFM task list 3-1
-    - [ ] GFM task list 3-2
-    - [ ] GFM task list 3-3
-- [ ] GFM task list 4
-    - [ ] GFM task list 4-1
-    - [ ] GFM task list 4-2
 
 
 ## Table of Contents
