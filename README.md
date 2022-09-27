@@ -974,10 +974,140 @@ $ systemctl list-dependencies
 $ sudo pkill chronyd
 ```
 ## Change kernel runtime parameters, persistent and non-persistent
+
+```console
+$ sudo sysctl -a
+net.ipv6.conf.default.disable_ipv6 = 0
+$ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+$ sudo sysctl -w net.ipv6.conf.default.disable_ipv6
+
+$ man sysctl.d
+$ sysctl -a | grep vm
+vm.panic_on_oom = 0
+vm.percpu_pagelist_fraction = 0
+vm.stat_interval = 1
+vm.swappiness = 30
+
+$ sudo vim /etc/sysctl.d/swap-less.conf
+$ sudo sysctl -p /etc/sysctl.d/swap-less.conf
+```
+
 ## List and Identify SELinux AppArmor file and process contexts
+
+```console
+$ ls -l
+-rw-rw-r--. 1 aaron aaron 160 Dec 1 18:19 archive.tar.gz
+
+$ ls -Z
+unconfined_u:object_r:user_home_t:s0 archive.tar.gz
+```
+
+unconfined_u:object_r:user_home_t:s0
+    user       role     type      level
+
+1. Only certain users can enter certain roles and certain types.
+2. It lets authorized users and processes do their job, by granting the
+permissions they need.
+3. Authorized users and processes are allowed to take only a limited
+set of actions.
+4. Everything else is denied. 
+
+```console
+$ ps axZ
+system_u:system_r:accountsd_t:s0 995 ? Ssl 0:00 /usr/libexec/accoun
+system_u:system_r:NetworkManager_t:s0 1024 ? Ssl 0:00 /usr/sbin/NetworkMa
+system_u:system_r:sshd_t:s0-s0:c0.c1023 1030 ? Ss 0:00 /usr/sbin/sshd -D -
+system_u:system_r:tuned_t:s0 1032 ? Ssl 0:00 /usr/libexec/platfo
+system_u:system_r:cupsd_t:s0-s0:c0.c1023 1033 ? Ss 0:00 /usr/sbin/cupsd -l
+
+$ ls -Z /usr/sbin/sshd
+system_u:object_r:sshd_exec_t:s0 /usr/sbin/sshd
+
+$ ps axZ
+unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 1875 ? Ss 0:00 /usr/lib/
+system_u:system_r:init_t:s0 1881 ? S 0:00 (sd-pam)
+unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 1891 ? Ssl 0:00 /usr/bin
+
+$ id -Z
+
+$ sudo semanage login -l
+Login Name SELinux User MLS/MCS Range Service
+__default__ unconfined_u s0-s0:c0.c1023 *
+root unconfined_u s0-s0:c0.c1023 *
+
+$ sudo semnage user -l
+SELinux User Prefix MCS Level MCS Range SELinux Roles
+guest_u user s0 s0 guest_r
+root user s0 s0-s0:c0.c1023 staff_r sysadm_r system_r unconfined_r
+staff_u user s0 s0-s0:c0.c1023 staff_r sysadm_r unconfined_r
+sysadm_u user s0 s0-s0:c0.c1023
+
+$ getenforce
+```
+
+Enforcing, Permissive, Disabled
+------
 
 # User and Group Management
 ## Create delete and modify local user accounts
+```console
+$ sudo useradd john
+$ ls -a /etc/skel
+
+$ useradd --defaults
+# This is the same:
+$ useradd -D
+
+$ cat /etc/login.defs
+$ sudo passwd john
+$ sudo userdel john
+$ sudo userdel --remove john
+# This is the same:
+$ sudo userdel -r john
+$ sudo useradd --sehll /bin/othershell --home-dir /home/otherdirectory/ john
+$ sudo useradd -s /bin/othershell -d /home/otherdirectory/ john
+$ sudo useradd -s /bin/othershell john
+
+$ cat /etc/passwd
+$ sudo useradd --uid 1100 smith
+# This is the same:
+$ sudo useradd -u 1100 smith
+$ ls -ln
+$ id
+$ whoami
+$ sudo useradd --system sysacc
+
+$ sudo usermod --home /home/bla --move-home john
+$ sudo usermod -d /home/bla -m john
+$ sudo usermod --login jane john 
+# This is the same:
+$ sudo usermod -l jane john
+$ sudo usermod --shell /bin/bla jane
+# This is the same:
+$ sudo usermod -s /bin/bla jane
+
+$ sudo usermod --lock jane
+SAME: $ usermod -L jane
+$ usermod --unlock jane
+SAME: $ usermod -U jane
+$ usermod --expiredare 2021-12-10 jane
+SAME: $ usermod -e 2021-12-10 jane
+$ usermod --expire "" jane
+SAME: $ usermod -e "" jane
+
+$ chage --lastday 0 jane
+SAME: $ chage -d 0 jane
+$ chage --lastday -1 jane
+SAME: $ chage -d -1 jane
+$ chage --maxdays 30 jane
+SAME: $ chage -M 30 jane
+$ chage --maxdays -1 jane
+SAME: $ chage -M -1 jane
+$ chage --list jane
+SAME: $ chage -l jane
+
+$ groupdel john
+```
 ## Create delete and modify local groups and group memberships 
 ## Manage system-wide enviroment profiles
 ## Manage template user enviroment 
