@@ -2,6 +2,11 @@
 
 ![](https://training.linuxfoundation.org/wp-content/uploads/2020/11/lfcs_111820-300x300.png)
 
+##TODOS
+
+- [ ] Write down content of powerpoint
+- [ ] Write down lab questions and answers
+
 
 ## Table of Contents
 
@@ -1041,7 +1046,7 @@ Login Name SELinux User MLS/MCS Range Service
 __default__ unconfined_u s0-s0:c0.c1023 *
 root unconfined_u s0-s0:c0.c1023 *
 
-$ sudo semnage user -l
+$ sudo semanage user -l
 SELinux User Prefix MCS Level MCS Range SELinux Roles
 guest_u user s0 s0 guest_r
 root user s0 s0-s0:c0.c1023 staff_r sysadm_r system_r unconfined_r
@@ -1049,6 +1054,9 @@ staff_u user s0 s0-s0:c0.c1023 staff_r sysadm_r unconfined_r
 sysadm_u user s0 s0-s0:c0.c1023
 
 $ getenforce
+$ sudo setenforce 1
+
+$ sudo chcon -t httpd_sys_content_t /var/index.html
 ```
 
 #### Enforcing, Permissive, Disabled
