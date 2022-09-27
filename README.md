@@ -215,11 +215,11 @@ $ chmod 660 /home/aaron/Pictures/family_dog.jpg
 # ln -s path_to_target_file path_to_link_file
 $ ln –s /home/aaron/Pictures/family_dog.jpg family_dog_shortcut.jpg
 $ ls -l
-  lrwxrwxrwx. 1 aaron aaron family_dog_shortcut.jpg -> /home/aaron/Pictures..
+lrwxrwxrwx. 1 aaron aaron family_dog_shortcut.jpg -> /home/aaron/Pictures..
 $ readlink family_dog_shortcut.jpg
-  /home/aaron/Pictures/family_dog.jpg
+/home/aaron/Pictures/family_dog.jpg
 $ echo “Test” >> fstab_shortcut
-  bash: fstab_shortcut: Permission denied
+bash: fstab_shortcut: Permission denied
 $ ls -l
 lrwxrwxrwx. 1 aaron aaron family_dog_shortcut.jpg -> /home/aaron/Pictures..
 ```
@@ -322,14 +322,14 @@ $ find -perm /u=rw,g=rw,o=r         # any of these permissions
 $ find \! -perm -o=r
 ```
 ## Compare and manipulate content
-```console
+```bash
 $ cat users.txt
 $ tac users.txt
 $ tail /var/log/dnf.log
 $ tail -n 20 dnf.log
 $ head dnf.log
 ```
-```console
+```bash
 $ sed 's/canda/canada/g' userinfo.txt
 $ sed 's/canda/canada' userinfo.txt
 $ sed -i 's/canda/canada' userinfo.txt
@@ -348,14 +348,189 @@ $ diff -y file1 file2     === $ sdiff file1 file2  # side-by-side diff
 ```
 
 ## Search file using Grep
+```batch
+$ grep 'CentOS' /etc/os-release
+NAME="- CentOS Stream"
+PRETTY_NAME="CentOS Stream 8"
+REDHAT_SUPPORT_PRODUCT_VERSION="CentOS Stream"
+
+$ grep 'centos' /etc/os-release
+ID="centos"
+CPE_NAME="cpe:/o:centos:centos:8"
+HOME_URL="https://centos.org/"
+
+$ grep -i 'centos' /etc/os-release                    # not case sensitive
+NAME="CentOS Stream"
+ID="centos"
+PRETTY_NAME="CentOS Stream 8"
+CPE_NAME="cpe:/o:centos:centos:8"
+HOME_URL="https://centos.org/"
+REDHAT_SUPPORT_PRODUCT_VERSION="CentOS Stream"
+
+$ sudo grep -r 'CentOS' /etc/                          # recursive
+/etc/centos-release:CentOS Stream release 8
+/etc/krb5.conf.d/kcm_default_ccache:# On Fedora/RHEL/CentOS, this is /etc/krb5.conf.d/
+grep: /etc/grub.d: Permission denied
+/etc/yum.repos.d/CentOS-Stream-AppStream.repo:# CentOS-Stream-AppStream.repo
+/etc/yum.repos.d/CentOS-Stream-AppStream.repo:# close to the client. You should use this for CentOS updates unless you are
+/etc/yum.repos.d/CentOS-Stream-AppStream.repo:name=CentOS Stream $releasever - AppStream
+/etc/yum.repos.d/CentOS-Stream-BaseOS.repo:# CentOS-Stream-BaseOS.repo
+
+$ sudo grep -ir 'centos' /etc/                         # ignore case
+/etc/dnf/vars/contentdir:centos
+/etc/rpm/macros.dist:%centos_ver 8
+/etc/rpm/macros.dist:%centos 8
+/etc/lvm/archive/cs_00000-1586619700.vg:creation_host = "LFCS-CentOS" # Linux LFCS-CentOS 4.18.0-338.el8.x86_64 #1 SMP
+Fri Aug 27 17:32:14 UTC 2021 x86_64
+/etc/lvm/archive/cs_00000-1586619700.vg: creation_host = "LFCS-CentOS"
+/etc/lvm/archive/cs_00000-1586619700.vg: creation_host = "LFCS-CentOS"
+/etc/lvm/backup/cs:creation_host = "LFCS-CentOS" # Linux LFCS-CentOS 4.18.0-338.el8.x86_64 #1 SMP Fri Aug 27 17:32:14 UTC
+2021 x86_64
+/etc/lvm/backup/cs: creation_host = "LFCS-CentOS"
+/etc/lvm/backup/cs: creation_host = "LFCS-CentOS"
+/etc/centos-release:CentOS Stream release 8
+
+$ grep -vi 'centos' /etc/os-release                    # --invert-match
+VERSION="8"
+ID_LIKE="rhel fedora"
+VERSION_ID="8"
+PLATFORM_ID="platform:el8"
+ANSI_COLOR="0;31"
+BUG_REPORT_URL="https://bugzilla.redhat.com/"
+REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux 8"
+
+$ grep -wi 'red' /etc/os-release                       # words
+REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux 8"
+
+$ grep -oi 'centos' /etc/os-release                    # --only-matching
+CentOS
+centos
+CentOS
+centos
+centos
+centos
+CentOS
+```
+
 ## Analyze test using basic regualar expressions
 ```console
-```
-## Extended Regular Expression 
+$ grep '^PASS' /etc/login.defs                          # line begin with PASS
+$ grep -v '^#' /etc/login.defs                          # invert | not line begin with #
+$ grep '7$' /etc/login.defs                             # line ends with 7
+
+$ grep -r 'c.t' /etc/                                   # all words include c and t
+cat, cut, execute, concatenated
+$ grep -wr 'c.t' /etc/                                  # only the word start with c and end with t
+cut, cat
+
+$ grep '.' /etc/login.defs                              # this looks not for special chars
+$ grep '\.' /etc/login.defs                             # this looks for chars
+
+$ grep -r 'let*' /etc/                                  # match previous element 0 or more times
+files, silent, problem, leftmargin, left, letter, legal
+$ grep -r '/.*/' /etc/                                  # begins with / and ends with /
+/usr/, /varr/cache/, /etc/
+$ grep -r '0*' /etc/                                    # Match previous 1 or more times
+0000000, 231043
+
+$ grep -r '0+' /etc/
+KP0+
+$ grep -r '0\+' /etc/
+0, 0000, 270372, 1.0
+$ grep -Er '0+' /etc/
+0, 0000, 270372, 1.0
+````
+
+## Extended Regular Expression
 ```console
+$ egrep -r '0+' /etc/
+0, 0000, 270372, 1.0
+````
+### Previous Element can Exist this many Times
+```console
+$ egrep -r '0{3,}' /etc/
+000
+$ egrep -r '10,{,3}' /etc/
+1.0, 160, 1, 100000, 10
+$ egrep -r '0{3}' /etc/
+000
+$ egrep -r '0{3,5}' /etc/                        
+000, 0000, 00000
+````
+### Make The Previous Element Optional
+```console
+$ egrep -r 'disbled?' /etc/
+disble, disabled, disables
 ```
+
+### Match One Thing Or The Other
+```console
+$ egrep -r 'enabled|disbled' /etc/
+disbled, enabled
+$ egrep -ir 'enabled?|disbled?' /etc/
+Enabled, enabled, Disabled, disabled
+```
+
+### Ranges or Sets
+[a-z] [0-9] [abz954]
+```console
+$ egrep -r 'c[au]t' /etc/                                     
+cut, cat, deprecated, execute, shortcuts, cation
+
+$ egrep -r '/dev/.*' /etc/
+/etc/smartmontools/smartd.conf:#/dev/twl0 -d 3ware,0 -a -s L/../../2/01
+/etc/smartmontools/smartd.conf:#/dev/twl0 -d 3ware,1 -a -s L/../../2/03
+/etc/smartmontools/smartd.conf:#/dev/hdc,0 -a -s L/../../2/01
+/etc/smartmontools/smartd.conf:#/dev/hdc,1 -a -s L/../../2/03
+
+$ egrep -r '/dev/[a-z]*' /etc/
+/etc/smartmontools/smartd.conf:#/dev/twl0 -d 3ware,0 -a -s L/../../2/01
+/etc/smartmontools/smartd.conf:#/dev/hdc,0 -a -s L/../../2/01
+/etc/smartmontools/smartd.conf:#/dev/hdc,1 -a -s L/../../2/03
+
+$ egrep -r '/dev/[a-z]*[0-9]' /etc/
+/etc/sane.d/v4l.conf:/dev/bttv0
+/etc/sane.d/v4l.conf:/dev/video0
+/etc/sane.d/v4l.conf:/dev/video1
+
+$ egrep -r '/dev/[a-z]*[0-9]?' /etc/
+/etc/smartmontools/smartd.conf:#/dev/twl0 -d 3ware,0 -a -s L/../../2/01
+/etc/smartmontools/smartd.conf:#/dev/hdc,0 -a -s L/../../2/01
+/etc/smartmontools/smartd_warning.sh: hostname=`eval $cmd 2>/dev/null` || continue
+````
+### Subexpressions
+```console
+$ egrep -r '/dev/[a-z]*[0-9]?' /etc/
+/etc/sane.d/umax.conf:/dev/usbscanner
+/etc/sane.d/epjitsu.conf:#usb /dev/usb/scanner0
+/etc/sane.d/umax_pp.conf:# /dev/ppi1, ...
+/etc/sane.d/fujitsu.conf:#scsi /dev/sg1
+
+$ egrep -r '/dev/([]*[0-9]?)*' /etc/
+/etc/sane.d/dc240.conf:port=/dev/ttyS0
+/etc/sane.d/dc240.conf:#port=/dev/ttyd1
+/etc/sane.d/dc240.conf:#port=/dev/term/a
+/etc/sane.d/dc240.conf:#port=/dev/tty0p0
+/etc/sane.d/dc240.conf:#port=/dev/tty01
+/etc/sane.d/dc25.conf:port=/dev/ttyS0
+
+$ egrep -r -r '/dev/(([a-z]|[A-Z])*[0-9]?)*' /etc/
+/etc/sane.d/dc240.conf:port=/dev/ttyS0
+/etc/sane.d/dc240.conf:#port=/dev/ttyd1
+/etc/sane.d/dc240.conf:#port=/dev/term/a
+```
+### [^]: Negated Ranges Or Sets
+```console
+$ egrep -r 'http[^s]' /etc/                             # NOT https
+http, httpd
+
+$ egrep -r '/[^a-z]' /etc/                              # NOT lower case letters
+/X, /4, /$, /., /
+```
+
 ## Archive backup compress unpack and uncompress files
 ```console
+
 ```
 ## Compress and Uncompress files
 ```console
