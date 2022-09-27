@@ -2,7 +2,6 @@
 
 ![](https://training.linuxfoundation.org/wp-content/uploads/2020/11/lfcs_111820-300x300.png)
 
-test
 
 ## Table of Contents
 
@@ -530,8 +529,41 @@ $ egrep -r '/[^a-z]' /etc/                              # NOT lower case letters
 ```
 
 ## Archive backup compress unpack and uncompress files
-```console
 
+1. Archive (Packing) = backup.tar
+2. Compress = backup.tar.gz
+3. Backup
+
+### Packing Files and Directories
+```console
+$ tar --list --file archive.tar
+$ tar -tf archive.tar
+$ tar tf archive.tar
+
+$ tar --create --file archive.tar file1
+# This is the same:
+$ tar cf archive.tar file1
+
+$ tar --append --file archive.tar file2 
+# This is the same:
+$ tar rf archive.tar file2
+
+$ tar --create --file archive.tar Pictures/
+$ tar --create --file archive.tar /home/bob/Pictures/
+
+$ tar --list --file archive.tar 
+# This is the same:
+$ tar tf archive.tar
+
+$ tar --extract --file archive.tar
+# This is the same:
+$ tar xf archive.tar
+
+$ tar --extract --file archive.tar --directory /tmp/
+# This is the same:
+$ tar xf archive.tar -C /tmp/
+
+$ sudo tar --extract --file archive.tar --directory /tmp/
 ```
 ## Compress and Uncompress files
 ```console
