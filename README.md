@@ -25,7 +25,7 @@
   
 - [Operation of running systems](#operation-of-running-systems)
   * [Boot, reboot, and shutdown a system safely](#boot-reboot-and-shutdown-a-system-safely)
-  * [Boot or change system nto different operating modes](#boot-or-change-system-nto-different-operating-modes)
+  * [Boot or change system into different operating modes](#boot-or-change-system-into-different-operating-modes)
   * [Install, configure and troubleshoot bootloaders](#install-configure-and-troubleshoot-bootloaders)
   * [Use scripting to automate system maintenance tasks](#use-scripting-to-automate-system-maintenance-tasks)
   * [Manage the startup process and service (In Services Configuration)](#manage-the-startup-process-and-service---in-services-configuration)
@@ -669,7 +669,80 @@ $ grep –v '^#' /etc/login.defs | sort | column -t
 
 # Operation of running systems
 ## Boot reboot and shutdown a system safely
-## Boot or change system nto different operating modes
+```console
+$ systemctl reboot                             # system control
+$ systemctl poweroff
+$ systemctl reboot --force
+$ systemctl poweroff --force
+$ systemctl reboot --force --force
+$ systemctl poweroff --force --force
+$ shutdown 02:00
+$ shutdown +15
+$ shutdown -r 02:00
+$ shutdown -r +15
+$ shutdown  -r +1
+```
+
+## Use Scripting to Automate Tasks
+```console
+$ touch script.sh
+$ chmod +x script.sh
+$ ./script.sh
+```
+script.sh:
+```bash
+#!/bin/bash
+
+#Log the date and time the script was last
+executed
+date >> /tmp/script.log
+cat /proc/version >> /tmp/script.log
+
+tar acf /tmp/archive.tar.gz /etc/dnf
+
+if test -f /tmp/archive.tar.gz; then
+    mv /tmp/archive.tar.gz
+    /tmp/archive.tar.gz.OLD
+    tar acf /tmp/archive.tar.gz /etc/dnf/
+else
+    tar acf /tmp/archive.tar.gz /etc/dnf/
+fi
+
+if grep -q '5' /etc/default/grub; then
+    echo 'Grub has timeout of 5 seconds.'
+else
+    echo 'Grub DOES NOT have a timeout of 5 seconds.'
+fi
+```
+
+```bash
+#!/bin/sh
+# Check whether 0anacron was run today already
+if test -r /var/spool/anacron/cron.daily; then
+    day=`cat /var/spool/anacron/cron.daily`
+fi
+if [ `date +%Y%m%d` = "$day" ]; then
+    exit 0
+fi
+# Do not run jobs when on battery power
+online=1
+for psupply in AC ADP0 ; do
+    sysfile="/sys/class/power_supply/$psupply/online"
+    if [ -f $sysfile ] ; then
+        if [ `cat $sysfile 2>/dev/null`x = 1x ]; then
+            online=1
+            break
+        else
+            online=0
+        fi
+    fi
+done
+if [ $online = 0 ]; then
+    exit 0
+fi
+```
+
+## Boot or change system into different operating modes
 ## Install configure and troubleshoot bootloaders
 ## Use scripting to automate system maintenance tasks
 ## Manage the startup process and service - In Services Configuration
