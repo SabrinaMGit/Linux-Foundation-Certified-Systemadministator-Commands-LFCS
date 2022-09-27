@@ -871,8 +871,10 @@ $ anacron -T
 ```
 ### Scheduling Jobs with at
 ```console
+$ sudo -i                                   # execute as root
 $ at 15:00
 $ at 'August 20 2022'
+at> /usr/bin/touch atscheduler              # CTL+D
 $ at '2:30 August 20 2022'
 $ at 'now + 30 minutes'
 $ at 'now + 3 hours'
@@ -885,7 +887,11 @@ $ at -c 20
 $ atrm 20
 ```
 ## Verify completion of scheduled jobs
-missing
+missing 
+
+```console
+$ sudo anacron -n -f 
+```
 ## Update software to provide required functionality and security
 ```console
 $ dnf check-upgrade
@@ -1045,7 +1051,7 @@ sysadm_u user s0 s0-s0:c0.c1023
 $ getenforce
 ```
 
-Enforcing, Permissive, Disabled
+#### Enforcing, Permissive, Disabled
 ------
 
 # User and Group Management
@@ -1109,6 +1115,9 @@ SAME: $ chage -l jane
 $ groupdel john
 ```
 ## Create delete and modify local groups and group memberships 
+```console
+
+```
 ## Manage system-wide enviroment profiles
 ## Manage template user enviroment 
 ## Configure user resource limits
