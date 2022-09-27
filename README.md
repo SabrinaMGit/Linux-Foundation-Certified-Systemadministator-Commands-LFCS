@@ -887,6 +887,17 @@ $ atrm 20
 ## Verify completion of scheduled jobs
 missing
 ## Update software to provide required functionality and security
+```console
+$ dnf check-upgrade
+$ sudo dnf upgrade
+$ sudo dnf repolist
+repo id repo name
+appstream CentOS Stream 8 - AppStream
+baseos CentOS Stream 8 - BaseOS
+extras CentOS Stream 8 - Extras
+$ sudo dnf repolist -v                          # verbose
+
+```
 ## Manage Software
 ## Identify the component of a Linux distribution that a file belongs to 
 ## Verify the integrity and availability of resources
