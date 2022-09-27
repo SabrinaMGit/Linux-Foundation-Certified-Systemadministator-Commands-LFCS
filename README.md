@@ -943,10 +943,36 @@ $ sudo dnf group list --hidden
 $ wget https://download.nomachine.com/download/7.7/Linux/nomachine_7.7.4_1_x86_64.rpm
 $ sudo dnf install ./nomachine_7.7.4_1_x86_64.rpm
 $ sudo dnf remove nomachine
+$ sudo dnf autoremove
+$ sudo dnf history
+$ sudo dnf                                # TAB TAB y => display all possibilities
 ```
 
 ## Identify the component of a Linux distribution that a file belongs to 
+```console
+$ dnf provides /etc/anacrontab
+$ sudo rm /etc/anacrontab
+$ dnf reinstall cronie-anacron
+$ dnf provides docker
+$ dnf repoquery --list nginx
+$ dnf repoquery -l nginx | grep conf
+```
 ## Verify the integrity and availability of resources
+### Verify Key Resources and Processes
+```console
+$ df
+$ du -sh /bin/
+$ df -h
+$ free -h
+$ uptime
+$ lspci 
+$ lscpu
+$ sudo xfs_repair -v /dev/vdb1
+$ sudo fsck.ext4 -v -f -p /dev/vdb2
+
+$ systemctl list-dependencies
+$ sudo pkill chronyd
+```
 ## Change kernel runtime parameters, persistent and non-persistent
 ## List and Identify SELinux AppArmor file and process contexts
 
