@@ -4,8 +4,8 @@
 
 ## TODOS
 
-- [] Write down content of powerpoint
-- [] Write down lab questions and answers
+- [ ] Write down content of powerpoint
+- [ ] Write down lab questions and answers
 
 
 
