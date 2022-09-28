@@ -1121,14 +1121,75 @@ SAME: $ chage -M -1 jane
 $ chage --list jane
 SAME: $ chage -l jane
 
+$ groupadd --gid 9873 cricket
 $ groupdel john
 ```
 ## Create delete and modify local groups and group memberships 
 ```console
+$ sudo gpasswd --add john developers
+$ sudo gpasswd --a john developers
+$ groups john
+john: john developers
+$ sudo gpasswd --delete john developers
+$ sudo gpasswd -d john developers
 
+$ sudo usermod -g developers john
+$ sudo usermod --gid developers john
+$ groups john
+john: developers
+$ gpasswd --help
+-a, --add USER add USER to GROUP
+
+$ sudo groupmod --new-name programmers developers
+$ sudo groupmod -n programmers developers
+$ sudo groupdel programmers
+groupdel: cannot remove the primary group of user 'john'
+$ sudo usermod --gid john john
+$ sudo groupdel programmers
 ```
 ## Manage system-wide enviroment profiles
+```console
+$ printenv
+PATH=/home/aaron/.local/bin:/home/aaron/bin:/usr/local/bin:/usr/local/sbin
+:/usr/bin:/usr/sbin
+HISTSIZE=1000
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/2260,unix/unix:/tmp/.ICEunix/2260
+
+SAME:$ env
+
+$ HISTSIZE=2000
+$ history
+
+$ echo $HOME
+$ sudo vim /etc/environment
+> KODEKLOUD=https://kodekloud.com
+$ echo $KODEKLOUD
+
+$ sudo vim /etc/profile.d/lastlogin.sh 
+> echo "Your last login was at: " >
+> $HOME/lastlogin
+> date >> $HOME/lastlogin 
+$ logout
+$ ls
+lastlogin
+$ cat lastlogin
+Your last login was at: Thursday DEC 16 11:19:27 CDT 2021
+```
 ## Manage template user enviroment 
+```console
+$ sudo vim /home/trinity/.bashrc
+> PATH="$HOME/.local/bin:$HOME/bi
+> n:$PATH"
+> PATH="$HOME/.local/bin:$HOME/bin
+> :/opt/bin:$PATH"
+$ echo $PATH
+/home/trinity/.local/bin:/home/trinity/bin:/usr/local/bin:/usr/bin:/usr
+/local/sbin:/usr/sbin
+$ specialtool 
+SAME:$ /opt/specialtool
+$ sudo vim /etc/skel/.bashrc
+```
 ## Configure user resource limits
 ## Manage user privileges
 ## Manage access to the root account
