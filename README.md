@@ -1175,6 +1175,9 @@ $ ls
 lastlogin
 $ cat lastlogin
 Your last login was at: Thursday DEC 16 11:19:27 CDT 2021
+
+$ sudo vi /etc/profile.d/welcome.sh
+> echo "next login will show this text"
 ```
 ## Manage template user enviroment 
 ```console
@@ -1189,6 +1192,13 @@ $ echo $PATH
 $ specialtool 
 SAME:$ /opt/specialtool
 $ sudo vim /etc/skel/.bashrc
+
+vi ~/.bashrc 
+> export MYVAR=TRUE
+$ source ~/.bashrc
+
+sudo cp /etc/skel/.bash* default_data/
+sudo touch /etc/skel/README
 ```
 ## Configure user resource limits
 ## Manage user privileges
