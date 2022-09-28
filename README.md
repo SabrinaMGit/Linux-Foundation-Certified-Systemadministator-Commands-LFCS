@@ -893,10 +893,19 @@ $ at -c 20
 $ atrm 20
 ```
 ## Verify completion of scheduled jobs
-missing 
 
 ```console
+# rerun cron job now force
 $ sudo anacron -n -f 
+
+$ sudo cat /var/log/cron
+$ sudo vim /etc/anacrontab
+$ sudo anacron -n
+$ sudo grep anacron /var/log/cron
+
+$ sudo grep atd /var/log/cron
+$ echo "scheduled" | system-cat --identifier=at_schuduled_backup
+$ journalctl | grep at_scheduled_backup
 ```
 ## Update software to provide required functionality and security
 ```console
