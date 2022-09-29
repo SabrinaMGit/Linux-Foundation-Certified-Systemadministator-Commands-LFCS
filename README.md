@@ -1212,6 +1212,7 @@ sudo touch /etc/skel/README
 ### /etc/skel/ is the directory for the default files for every created user
 ### /etc/enviroment is the file to set variables for all users /system-wide 
 ### /home/bob/.bashrc is the file for user variables 
+### /etc/profile.d/welcome.sh is the file to set a welcome message to each logged in user
 
 ## Configure user resource limits
 ## Manage user privileges
