@@ -1209,6 +1209,10 @@ $ source ~/.bashrc
 sudo cp /etc/skel/.bash* default_data/
 sudo touch /etc/skel/README
 ```
+### /etc/skel/ is the directory for the default files for every created user
+### /etc/enviroment is the file to set variables for all users /system-wide 
+### /home/bob/.bashrc is the file for user variables 
+
 ## Configure user resource limits
 ## Manage user privileges
 ## Manage access to the root account
