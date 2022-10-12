@@ -12,7 +12,7 @@
 ## Table of Contents
 
 - [Essential commands](#essential-commands)
-  * [Log into & remote graphical and text mode consoles](#log-into-remote-graphical-and-text-mode-consoles)
+  * [Log into & remote graphical and text mode shells](#log-into-remote-graphical-and-text-mode-shells)
   * [Read and use System Documentation](#read-and-use-system-documentation)
   * [Create, Delete, Copy and Move Files and Directories](#create-delete-copy-and-move-files-and-directories)
   * [Create and manage hard links](#create-and-manage-hard-links)
@@ -93,8 +93,8 @@
 
 # Essential commands
 
-## Log into remote graphical and text mode consoles
-```console
+## Log into remote graphical and text mode shells
+```shell
 $ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group
 default qlen 1000
@@ -111,13 +111,13 @@ noprefixroute enp0s3
 valid_lft 1966sec preferred_lft 1966sec
 inet6 fe80::a00:27ff:fe6b:d787/64 scope link noprefixroute
 ```
-```console
+```shell
 $ ssh user@ip
-Activate the web console with: systemctl enable --now cockpit.socket
+Activate the web shell with: systemctl enable --now cockpit.socket
 Last login: Tue Oct 19 20:27:15 2021 from 192.168.0.3
 ```
 ## Read and use System Documentation
-```console
+```shell
 $ ls --help
 $ ls -l
 $ journalctl --help
@@ -133,7 +133,7 @@ $ systemctl list -dependecies           [TAB]
 ```
 ## Create Delete Copy and Move Files and Directories
 ### Current / Working Directory
-```console
+```shell
 $ ls
 $ ls -a
 $ ls -l /var/log/
@@ -142,41 +142,41 @@ $ ls -alh
 $ pwd
 $ cd /var/log/
 $ cd ..
-4 cd /
+$ cd /
 $ cd -
 $ cd
 ```
 ### Creating Files 
-```console
+```shell
 $ touch file.txt
 $ touch /home/bob/file.txt
 $ touch ../bob/file.txt
 ```
 
 ### Creating Directories
-```console
+```shell
 $ mkdir Files
 ```
 
 ### Moving Files and Directories
-```console
+```shell
 $ cp file.txt Files/
 $ cp -r Files/ BackupFiles/
 ```
 
 ### Moving Files
-```console
+```shell
 $ mv file.txt Files/
 ```
 
 ### Deleting Files and Directories
-```console
+```shell
 $ rm files.txt
 $ rm -r Files/
 ```
 ## Create and manage hard links
 ### Inodes
-```console
+```shell
 $ echo “Picture of Milo the dog” > Pictures/family_dog.jpg
 $ stat Pictures/family_dog.jpg
 File: Pictures/family_dog.jpg
@@ -190,7 +190,7 @@ Change: 2021-10-27 16:33:18.851749919 -0500
 Birth: 2021-10-26 13:37:17.980969655 -0500
 ```
 ### Hard Links
-```console
+```shell
 $ cp –r /home/aaron/Pictures/ /home/jane/Pictures/
 $ ln /home/aaron/Pictures/family_dog.jpg /home/jane/Pictures/family_dog.jpg
 # ln path_to_target_file path_to_link_file
@@ -210,14 +210,14 @@ $ rm /home/aaron/Pictures/family_dog.jpg
 $ rm /home/jane/Pictures/family_dog.jpg
 ```
 ### Limitations and Considerations
-```console
+```shell
 $ useradd –a –G family aaron
 $ useradd –a –G family jane
 $ chmod 660 /home/aaron/Pictures/family_dog.jpg
 ```
 
 ## Create and manage soft links
-```console
+```shell
 # ln -s path_to_target_file path_to_link_file
 $ ln –s /home/aaron/Pictures/family_dog.jpg family_dog_shortcut.jpg
 $ ls -l
@@ -232,7 +232,7 @@ lrwxrwxrwx. 1 aaron aaron family_dog_shortcut.jpg -> /home/aaron/Pictures..
 ## List set and change standard file permissions
 
 ### Owners and Groups
-```console
+```shell
 $ ls -l
 $ chgrp wheel picture.jpg
 $ ls -l 
@@ -246,7 +246,7 @@ $ ls -l
 -rw-r-----. 1 bob family 49 Oct 27 14:41 picture.jpg
 ```
 ### File and Directory Permissions
-```console
+```shell
 $ ls -l
 -rwxrwxrwx. 1 bob family 49 Oct 27 14:41 picture.jpg
 ```
@@ -264,7 +264,7 @@ $ ls -l
 owner | group | others
 
 ### Adding Permissions
-```console
+```shell
 $ chmod u+w picture.jpg
 $ chmod o-r picture.jpg
 $ chmod g=r picture.jpg
@@ -283,10 +283,10 @@ $ chmod 755 text.txt
 |     x      |   1   |
 
 ## SUID SGID and Sticky Bit
-```console
+```shell
 ```
 ## Search for files
-```console
+```shell
 $ find /usr/share/ -name '*.jpg'
 $ find /lib64/ -size +10M
 $ find /dev/ -mmin -1
@@ -296,7 +296,7 @@ $ find -iname bob
 $ find -name "f*"
 ```
 ### Modified Time
-```console
+```shell
 $ find -mmin [minute]
 $ find -mmin 5
 $ find -mmin -5
@@ -305,13 +305,13 @@ $ find -mtime 2                     # 24-hour periods
 $ find -cmin -5                     # change Minute
 ```
 ### File Size
-```console
+```shell
 $ find -size 512k
 $ find -size +512k                  # Greater than 512 kb
 $ find -size -512k                  # Less than 512 kb
 ```
 ### Search Expressions
-```console
+```shell
 $ find -name "f*"
 $ find -name "f*" -size 512k        # AND operator
 $ find -name "f*" -o -size 512k     # OR operator
@@ -354,7 +354,7 @@ $ diff -y file1 file2     === $ sdiff file1 file2  # side-by-side diff
 ```
 
 ## Search file using Grep
-```batch
+```shell
 $ grep 'CentOS' /etc/os-release
 NAME="- CentOS Stream"
 PRETTY_NAME="CentOS Stream 8"
@@ -419,7 +419,7 @@ CentOS
 ```
 
 ## Analyze test using basic regualar expressions
-```console
+```shell
 $ grep '^PASS' /etc/login.defs                          # line begin with PASS
 $ grep -v '^#' /etc/login.defs                          # invert | not line begin with #
 $ grep '7$' /etc/login.defs                             # line ends with 7
@@ -448,12 +448,12 @@ $ grep -Er '0+' /etc/
 ````
 
 ## Extended Regular Expression
-```console
+```shell
 $ egrep -r '0+' /etc/
 0, 0000, 270372, 1.0
 ````
 ### Previous Element can Exist this many Times
-```console
+```shell
 $ egrep -r '0{3,}' /etc/
 000
 $ egrep -r '10,{,3}' /etc/
@@ -464,13 +464,13 @@ $ egrep -r '0{3,5}' /etc/
 000, 0000, 00000
 ````
 ### Make The Previous Element Optional
-```console
+```shell
 $ egrep -r 'disbled?' /etc/
 disble, disabled, disables
 ```
 
 ### Match One Thing Or The Other
-```console
+```shell
 $ egrep -r 'enabled|disbled' /etc/
 disbled, enabled
 $ egrep -ir 'enabled?|disbled?' /etc/
@@ -479,7 +479,7 @@ Enabled, enabled, Disabled, disabled
 
 ### Ranges or Sets
 [a-z] [0-9] [abz954]
-```console
+```shell
 $ egrep -r 'c[au]t' /etc/                                     
 cut, cat, deprecated, execute, shortcuts, cation
 
@@ -505,7 +505,7 @@ $ egrep -r '/dev/[a-z]*[0-9]?' /etc/
 /etc/smartmontools/smartd_warning.sh: hostname=`eval $cmd 2>/dev/null` || continue
 ````
 ### Subexpressions
-```console
+```shell
 $ egrep -r '/dev/[a-z]*[0-9]?' /etc/
 /etc/sane.d/umax.conf:/dev/usbscanner
 /etc/sane.d/epjitsu.conf:#usb /dev/usb/scanner0
@@ -526,7 +526,7 @@ $ egrep -r -r '/dev/(([a-z]|[A-Z])*[0-9]?)*' /etc/
 /etc/sane.d/dc240.conf:#port=/dev/term/a
 ```
 ### [^]: Negated Ranges Or Sets
-```console
+```shell
 $ egrep -r 'http[^s]' /etc/                             # NOT https
 http, httpd
 
@@ -541,7 +541,7 @@ $ egrep -r '/[^a-z]' /etc/                              # NOT lower case letters
 3. Backup
 
 ### Packing Files and Directories
-```console
+```shell
 $ tar --list --file archive.tar
 $ tar -tf archive.tar
 $ tar tf archive.tar
@@ -572,7 +572,7 @@ $ tar xf archive.tar -C /tmp/
 $ sudo tar --extract --file archive.tar --directory /tmp/
 ```
 ## Compress and Uncompress files
-```console
+```shell
 $ gzip file1
 $ gunzip file1.gz
 $ gzip --decompress file1.gz
@@ -594,7 +594,7 @@ compressed uncompressed ratio name
 ```
 
 ### Compress And Decompression Utilities
-```console
+```shell
 $ zip archive file 1
 # This is the same:
 $ zip archive.zip file1
@@ -624,20 +624,20 @@ $ tar xf archive.tar.gz file1
 ````
 
 ## Backup files to a Remote System
-```console
+```shell
 $ rsync -a Pictures/ bob@9.9.9.9:/home/bib/Pictures/
 $ rsync -a bob@9.9.9.9:/home/bib/Pictures/ Pictures/
 $ rsync -a Pictures/ /Backup/Pictures/
 ```
 ### Disk Imaging
-```console
+```shell
 $ sudo dd if=/dev/vda of=diskimage.raw bs=1M status=progress
 1340080128 bytes (1.3GB, 1.2GB) copied, 3s, 432 MB/s
 $ sudo dd if=diskimage.raw of=/dev/vda bs=1M status=progress
 1340080128 bytes (1.3GB, 1.2GB) copied, 3s, 432 MB/s
 ```
 ## Use input output redirection
-```console
+```shell
 $ cat file.txt
 $ sort file.txt
 $ sort file.txt > sortedfile.txt
@@ -675,7 +675,7 @@ $ grep –v '^#' /etc/login.defs | sort | column -t
 
 # Operation of running systems
 ## Boot reboot and shutdown a system safely
-```console
+```shell
 $ systemctl reboot                             # system control
 $ systemctl poweroff
 $ systemctl reboot --force
@@ -696,7 +696,7 @@ missing
 
 ## Use scripting to automate system maintenance tasks
 ### Use Scripting to Automate Tasks
-```console
+```shell
 $ touch script.sh
 $ chmod +x script.sh
 $ ./script.sh
@@ -755,7 +755,7 @@ fi
 ```
 ## Manage the startup process and service - In Services Configuration
 ### Start Process and Services
-```console
+```shell
 $ systemctl cat sshd.service
 $ systemctl edit --full sshd.service
 $ systemctl revert sshd.service
@@ -782,13 +782,13 @@ $ $ systemctl list-units --type service --al
 ## Diagnose and manage processes
 missing
 ## Locate and analyze system log files
-```console
+```shell
 $ less file.log
 $ tail -F file.log                                      # show all upcomming logs
 ```
 
 ### Journalctl
-```console
+```shell
 $ journalctl /bin/sudo
 $ journalctl -u sshd.service
 $ journalctl
@@ -807,12 +807,12 @@ $ journalctl -b 0
 $ journalctl -b -1
 ```
 ### See Who Logged In
-```console
+```shell
 $ last 
 $ lastlog
 ```
 ## Schedule tasks to run a set date and time
-```console
+```shell
 $ cat /etc/crontab
 SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
@@ -840,7 +840,7 @@ hourly = /etc/cron.hourly/
 monthly = /etc/cron.monthly/
 weekly = /etc/cron.weekly/
 
-```console
+```shell
 $ which touch
 $ crontab -e
 $ crontab -l
@@ -853,14 +853,14 @@ $ crontab -r
 $ sudo cronta -r -u jane
 ```
 
-```console
+```shell
 $ touch shellscript 
 $ sudo cp shellcript /etc/cron.hourly/
 $ sudo chmod -rx /etc/cron.hourly/shellcript
 $ sudo rm /etc/cron.hourly/shellscript
 ```
 ### Scheduling Jobs with anacron
-```console
+```shell
 $ sudo vim /etc/anacrontab
 #period in days delay in minutes job-identifier command
 1 5 cron.daily nice run-parts
@@ -876,7 +876,7 @@ $ sudo vim /etc/anacrontab
 $ anacron -T
 ```
 ### Scheduling Jobs with at
-```console
+```shell
 $ sudo -i                                   # execute as root
 $ at 15:00
 $ at 'August 20 2022'
@@ -894,7 +894,7 @@ $ atrm 20
 ```
 ## Verify completion of scheduled jobs
 
-```console
+```shell
 # rerun cron job now force
 $ sudo anacron -n -f 
 
@@ -908,13 +908,13 @@ $ echo "scheduled" | system-cat --identifier=at_schuduled_backup
 $ journalctl | grep at_scheduled_backup
 ```
 ## Update software to provide required functionality and security
-```console
+```shell
 $ dnf check-upgrade
 $ sudo dnf upgrade
 ````
 
 ## Manage Software
-```console
+```shell
 $ sudo dnf repolist
 repo id repo name
 appstream CentOS Stream 8 - AppStream
@@ -970,7 +970,7 @@ $ sudo dnf                                # TAB TAB y => display all possibiliti
 ```
 
 ## Identify the component of a Linux distribution that a file belongs to 
-```console
+```shell
 $ dnf provides /etc/anacrontab
 $ sudo rm /etc/anacrontab
 $ dnf reinstall cronie-anacron
@@ -980,7 +980,7 @@ $ dnf repoquery -l nginx | grep conf
 ```
 ## Verify the integrity and availability of resources
 ### Verify Key Resources and Processes
-```console
+```shell
 $ df
 $ du -sh /bin/
 $ df -h
@@ -996,7 +996,7 @@ $ sudo pkill chronyd
 ```
 ## Change kernel runtime parameters, persistent and non-persistent
 
-```console
+```shell
 $ sudo sysctl -a
 net.ipv6.conf.default.disable_ipv6 = 0
 $ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
@@ -1015,7 +1015,7 @@ $ sudo sysctl -p /etc/sysctl.d/swap-less.conf
 
 ## List and Identify SELinux AppArmor file and process contexts
 
-```console
+```shell
 $ ls -l
 -rw-rw-r--. 1 aaron aaron 160 Dec 1 18:19 archive.tar.gz
 
@@ -1033,7 +1033,7 @@ permissions they need.
 set of actions.
 4. Everything else is denied. 
 
-```console
+```shell
 $ ps axZ
 system_u:system_r:accountsd_t:s0 995 ? Ssl 0:00 /usr/libexec/accoun
 system_u:system_r:NetworkManager_t:s0 1024 ? Ssl 0:00 /usr/sbin/NetworkMa
@@ -1074,7 +1074,7 @@ $ sudo chcon -t httpd_sys_content_t /var/index.html
 
 # User and Group Management
 ## Create delete and modify local user accounts
-```console
+```shell
 $ sudo useradd john
 $ ls -a /etc/skel
 
@@ -1134,7 +1134,7 @@ $ groupadd --gid 9873 cricket
 $ groupdel john
 ```
 ## Create delete and modify local groups and group memberships 
-```console
+```shell
 $ sudo gpasswd --add john developers
 $ sudo gpasswd --a john developers
 $ groups john
@@ -1157,7 +1157,7 @@ $ sudo usermod --gid john john
 $ sudo groupdel programmers
 ```
 ## Manage system-wide enviroment profiles
-```console
+```shell
 $ printenv
 PATH=/home/aaron/.local/bin:/home/aaron/bin:/usr/local/bin:/usr/local/sbin
 :/usr/bin:/usr/sbin
@@ -1189,7 +1189,7 @@ $ sudo vi /etc/profile.d/welcome.sh
 > echo "next login will show this text"
 ```
 ## Manage template user enviroment 
-```console
+```shell
 $ sudo vim /home/trinity/.bashrc
 > PATH="$HOME/.local/bin:$HOME/bi
 > n:$PATH"
