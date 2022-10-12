@@ -135,3 +135,119 @@ gpgcheck=0
 
 $ sudo dnf install webmin
 ````
+
+# Lab 9 Zypper
+# 9.1
+````shell
+$ zypper list-updates
+$ sudo zypper update bash
+$ zypper repos
+$ zypper search -i kernel
+$ zypper search kernel
+$ sudo zypper install apache2-devel
+````
+## 9.2
+````shell
+$ zypper search -d bash
+$ zyper search bash
+$ zypper info bash
+$ zypper info --requires bash
+$ sudo zypper remove --dry-run bash
+````
+
+# Lab 10 APT
+## Lab 10.1
+````shell
+$ sudo apt-get update
+$ sudo apt-get upgrade
+$ sudo apt-get -u upgrade
+$ apt-cache search "kernel"
+$ apt-cache search -n "kernel"
+$ apt-cache pkgnames "kernel"
+$ dpkg --get-selections "*kernel*"
+$ sudo apt-get install apache2-dev
+````
+## 10.2
+````shell
+$ apt-cache search bash 
+$ apt-cache search -n bash
+$ apt-cache show bash
+$ apt-cache depends bash
+$ apt-cache rdepends bash
+````
+## 10.3
+````shell
+$ apt-cache search metapackage
+$ sudo apt-get install bacula-client
+````
+# Lab 11 System Monitoring
+````shell
+$ git clone git://kernel.ubuntu.com/cking/stress-ng.git
+$ cd stress-ng
+$ make
+$ sudo make install
+
+$ stress-ng --help
+$ info stress-ng
+$ stress-ng -c 8 -i 4 -m 6 -t 20s
+$ stress-ng -m 4 -t 20s
+````
+# Lab 12 Processes
+## 12.1
+````shell
+$ ps -ef
+$ ps aux
+
+$ ps -o pid,pri,ni,cmd
+
+$ bash
+$ nice -n 10 bash
+$ ps -o pid,pri,ni,cmd
+
+$ renice 15 -p 22171
+$ ps -o pid,pri,ni,cmd
+
+$ top
+````
+## 12.2
+`````shell
+$ dd if=/dev/urandom of=/dev/null &
+$ ps -C dd -o pid,cmd, stat
+$ fg
+$ ^Z
+$ ps -C dd -o pid,cmd,stat
+$ jobs
+$ fg
+$ kill 25899
+`````
+# Lab 13 Memory monitoring and usage
+`````shell
+$ sudo /sbin/swapoff -a
+$ sudo /sbin/swapon -a
+$ stress-ng -m 12 -t 10s
+`````
+# Lab 14 I/O Monitoring and tuning
+## 14.1
+`````shell
+$ binnie++ --help
+$ time sudo bonnie++ -n 0 -u 0 -r 100 -f -b -d /mnt
+$ bon_csv2html < bonnie++.out > bonnie++.html
+$ bon_csv2txt < bonnie++.out > bonnie++.txt
+`````
+## 14.2
+`````shell
+$ tar zxvf fs_mark-3.3.tgz
+$ cd fs_mark
+$ make
+
+$ sudo dnf install glibc-static
+$ sudo zypper install glibc-devel-static
+$ fs_mark -d /tmp -n 2500 -s 10240
+$ iostat -x -d /dev/sda 2 10
+`````
+# Lab 15 I/O Sheduling 
+???
+````shell
+$ sudo ./lab_iosched.sh [# reads/writes (NMAX)] [file size in MB (NMEGS)]
+$ echo 3 > /proc/sys/vm/drop_caches
+````
