@@ -1215,7 +1215,66 @@ sudo touch /etc/skel/README
 ### /etc/profile.d/welcome.sh is the file to set a welcome message to each logged in user
 
 ## Configure user resource limits
+```shell
+$ sudo vim /etc/security/limits.conf
+> trinity - nproc 3
+$ sudo -iu trinity
+$ ps | less
+PID TTY TIME CMD
+6314 pts/0 00:00:00 bash
+6348 pts/0 00:00:00 ps
+6349 pts/0 00:00:00 less
+$ ls -a | grep bash | less
+bash: fork: retry: Resource temporarily unavailable.
+bash: fork: retry: Resource temporarily unavailable.
+bash: fork: retry: Resource temporarily unavailable.
+bash: fork: retry: Resource temporarily unavailable.
+bash: fork: retry: Resource temporarily unavailable. 
+
+$ logout
+$ ulimit -a
+core file size (blocks, -c) 0
+data seg size (kbytes, -d) unlimited
+scheduling priority (-e) 0
+file size (blocks, -f) unlimited
+pending signals (-i) 14722
+max locked memory (kbytes, -l) 64
+max memory size (kbytes, -m) unlimited
+open files (-n) 1024
+pipe size (512 bytes, -p) 8
+POSIX message queues (bytes, -q) 819200
+real-time priority (-r) 0
+stack size (kbytes, -s) 8192
+cpu time (seconds, -t) unlimited
+max user processes (-u) 14722
+virtual memory (kbytes, -v) unlimited
+file locks (-x) unlimited
+
+$ ulimit -u 5000
+```
 ## Manage user privileges
+```shell
+$ groups
+aaron family wheel
+$ sudo gpasswd -a trinity wheel
+$ sudo gpasswd -d trinity wheel
+$ sudo visudo 
+> trinity ALL=(ALL) ALL
+> %developers ALL=(ALL) ALL
+> trinity ALL=(aaron, john)   ALL
+> trinity ALL=ALL
+> trinity ALL=ALL /bin/ls, /bin/stat
+> trinity ALL= /bin/ls, /bin/stat
+> # %wheel ALL=(ALL) NOPASSWD:ALL
+> trinity ALL= NOPASSWD:ALL
+$ sudo -u trinity ls /home/trinity
+$ sudo ls
+$ sudo stat /bin
+$ sudo echo "Test passwd?"
+Sorry, user trinity is not allowed to execute '/bin/echo Test
+passed?' as root on LFCS-CentOS.
+```
+
 ## Manage access to the root account
 ## Configure PAM
 
