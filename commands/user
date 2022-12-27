@@ -23,3 +23,5 @@ chmod u+rw,g-x,o-rwx
 chmod uog+rgw 
 chown owner:group 
 chgrp 
+
+iptables 
