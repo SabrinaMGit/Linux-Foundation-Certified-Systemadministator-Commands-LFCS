@@ -1,0 +1,25 @@
+Files:
+/etc/passwd
+/etc/sudoers
+/etc/shadow
+/etc/group
+
+Commands:
+id 
+who
+last 
+useradd
+userdel
+usermod
+lgroupadd
+lgroupdel
+lgroupmod
+passwd 
+whoami
+groupadd
+groupdel
+
+chmod u+rw,g-x,o-rwx
+chmod uog+rgw 
+chown owner:group 
+chgrp 
