@@ -14,3 +14,5 @@ ip route
 ip route add 192.168.23.0/24 via 192.168.23.1
 ip addr add 192.168.23.10/24 dev eth0 
 traceroute
+netstat -an | grep 80 | grep -i LISTEN
+ip link set dev eth0 up
