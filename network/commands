@@ -1,0 +1,16 @@
+Files:
+/etc/hosts
+/etc/hostname
+/etc/resolve.conf
+/etc/nsswitch.conf
+
+Commands:
+nslookup
+ping 
+dig
+ip link
+route 
+ip route
+ip route add 192.168.23.0/24 via 192.168.23.1
+ip addr add 192.168.23.10/24 dev eth0 
+traceroute
