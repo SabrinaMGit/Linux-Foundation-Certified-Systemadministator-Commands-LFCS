@@ -1,0 +1,31 @@
+Files:
+/etc/fstab
+/etc/exports
+
+Commands:
+lsblk
+fdisk
+gdisk
+
+mkfs.ext4
+mount
+df
+
+exportfs
+install lvm2
+
+#physical volume
+pvcreate
+pvdisplay
+
+#volume group
+vgcreate
+vgdisplay
+vgs
+
+#lvm
+lvcreate
+lvdisplay
+lvs
+lvresize
+resize2fs
