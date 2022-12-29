@@ -3,6 +3,7 @@ Files:
 /etc/sudoers
 /etc/shadow
 /etc/group
+/etc/pam.d/su
 
 Commands:
 id 
@@ -25,3 +26,7 @@ chown owner:group
 chgrp 
 
 iptables 
+
+pam
+pam.conf
+groups
