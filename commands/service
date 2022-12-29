@@ -24,6 +24,28 @@ Host centos
 
 /etc/squid/squid.conf
 
+/etc/httpd/conf/httpd.conf
+/etc/httpd/conf.d/ssl.conf
+<VirtualHost *:443 >
+    ServerName store.example.com
+    DocumentRoot /var/www/store
+    SSLEngine on
+    SSLCertificateFile "/path/to/file.cert"
+    SSLCertificateKeyFile "/path/to/file.key"
+</VirtualHost>
+
+/var/log/httpd/access_log
+/etc/httpd/conf/httpd.conf
+<Directory "/var/www/html/admin">
+    Requiere all denied
+    Requere ip 192.2.3.2
+    Requiere valid-user
+    AuthType Basic
+    AuthBasicProvider file
+    AuthName "Bla"
+    AuthUserFile /etc/httpd/passwords
+</Directory>
+
 Commands:
 ip a
 named.service
@@ -41,3 +63,6 @@ echo "" | mailx -s "" john
 
 squid
 firewall-cmd --add-service=squid
+
+apachectl configtest
+htpasswd -c /etc/httpd/passwords bob
