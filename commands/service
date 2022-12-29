@@ -37,9 +37,9 @@ Host centos
 /var/log/httpd/access_log
 /etc/httpd/conf/httpd.conf
 <Directory "/var/www/html/admin">
-    Requiere all denied
-    Requere ip 192.2.3.2
-    Requiere valid-user
+    Require all denied
+    Require ip 192.2.3.2
+    Require valid-user
     AuthType Basic
     AuthBasicProvider file
     AuthName "Bla"
