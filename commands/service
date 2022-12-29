@@ -13,6 +13,17 @@ zone "example.com" IN {
 /etc/dovecot/conf.d/10-master.conf
 /etc/dovecot/conf.d/10-ssl.conf
 
+/etc/ssh/sshd_config
+.ssh/config
+Host centos
+    HostName 10.0.0.3 
+    Port 22
+    User bob
+    
+/etc/ssh/ssh_config.d/99-our-settings.conf
+
+/etc/squid/squid.conf
+
 Commands:
 ip a
 named.service
@@ -27,3 +38,6 @@ sendmail
 newaliases
 firewall-cmd --add-service=imap
 echo "" | mailx -s "" john
+
+squid
+firewall-cmd --add-service=squid
