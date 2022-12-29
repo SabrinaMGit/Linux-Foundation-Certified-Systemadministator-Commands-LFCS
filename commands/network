@@ -11,8 +11,25 @@ dig
 ip link
 route 
 ip route
+ip route show
 ip route add 192.168.23.0/24 via 192.168.23.1
 ip addr add 192.168.23.10/24 dev eth0 
+ip a add 10.0.0.50/24 dev eth1
 traceroute
 netstat -an | grep 80 | grep -i LISTEN
 ip link set dev eth0 up
+
+ss -tunlp
+nmcli device reapply eth1
+nmcli connection show
+nmcli connection modify enp0s3 +ip4.routes "192.49.23.0/24 10.0.0.100"
+nmtui
+
+hostnamectl
+timedatectl
+chronyd.service
+timedatectl set-ntp true
+
+firewall-cmd 
+              --get-default-zone | --list-all | --info-service | --add-service=http | --add-port=80/tcp | --add-sorce=10.3.2.4/24 --zone=trusted 
+              --runtime-to-permanent | --permanent
