@@ -1,6 +1,14 @@
+Install:
+nfs-utils #nfs-server #autofs
+lvm2
+quota
+
 Files:
 /etc/fstab
 /etc/exports
+/etc/auto.master
+/etc/auto.shares
+/proc/mdstat
 
 Commands:
 lsblk
@@ -8,20 +16,26 @@ fdisk
 gdisk
 
 mkfs.ext4
+xfs_admin
 mount
+umount
 df
+tune2fs
+findmnt
 
 exportfs
-install lvm2
 
 #physical volume
 pvcreate
 pvdisplay
+pvs
+pvremove
 
 #volume group
 vgcreate
 vgdisplay
 vgs
+vgremove
 
 #lvm
 lvcreate
@@ -29,3 +43,28 @@ lvdisplay
 lvs
 lvresize
 resize2fs
+lvmdiskscan
+
+#encryption
+cryptsetup
+
+#Raid
+mdadm
+
+#Adv. File Permissions
+getfacl
+setfacl
+chattr
+lsattr
+
+#quotas
+quota
+quotacheck
+fallocate
+edquota
+
+#swap
+swapon
+swapoff
+mkswap
+dd if=/dev/zero of= bs=1M count=1024 status=progress
