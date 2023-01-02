@@ -1,3 +1,11 @@
+Install:
+imap
+postfix
+squid
+mariadb
+libvirt
+qemu-kvm
+
 Files:
 /etc/named.conf
 /var/named/named.localhost
@@ -46,6 +54,19 @@ Host centos
     AuthUserFile /etc/httpd/passwords
 </Directory>
 
+/etc/my.cnf.d/maridb-server.cnf
+/etc/my.cnf.d/mysql-server.cnf
+
+testmaschine.xml
+<domain type="qemu">
+    <name>TestMaschine</name>
+    <memory unit="GiB">1></memory>
+    vcpu>1</vcpu>
+    <os>
+        <type arch='x86_64'>hvm</type>
+    </os>
+</domain>
+
 Commands:
 ip a
 named.service
@@ -55,14 +76,14 @@ cp --preserve=ownership /var/named/named.localhost /var/named/example.com.zone
 install bind bind-utils
 dig @localhost -q example.com ANY
 
-install postfix
 sendmail
 newaliases
 firewall-cmd --add-service=imap
 echo "" | mailx -s "" john
 
-squid
 firewall-cmd --add-service=squid
 
 apachectl configtest
 htpasswd -c /etc/httpd/passwords bob
+mysql
+virsh
