@@ -284,6 +284,17 @@ $ chmod 755 text.txt
 
 ## SUID SGID and Sticky Bit
 ```shell
+#suid
+chmod 4665 file1
+find . -perm -4000
+#sgid
+chmod 2665 file2
+find . -perm -2000
+#both
+chmod 6665 both
+find . perm -6000
+#sticky bit
+chmod 1665 file3
 ```
 ## Search for files
 ```shell
